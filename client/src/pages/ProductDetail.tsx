@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useRoute } from 'wouter';
-import { Product, Size } from '@/lib/types';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { ChevronLeft, Plus, Minus } from 'lucide-react';
+import { ChevronLeft, Plus, Minus, Loader2 } from 'lucide-react';
+
+type Size = 'Small' | 'Medium' | 'Large';
 
 const SIZE_MULTIPLIERS: Record<Size, number> = {
   'Small': 1.0,
@@ -12,19 +13,50 @@ const SIZE_MULTIPLIERS: Record<Size, number> = {
   'Large': 1.4,
 };
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  basePrice: number;
+  category: string;
+  roastLevel: string;
+  image: string;
+  available: boolean;
+}
+
 const ProductDetail: React.FC = () => {
   const [match, params] = useRoute('/products/:id');
   const [, setLocation] = useLocation();
   const { addItem } = useCart();
 
-  const [products] = useState<Product[]>(() => {
-    const stored = localStorage.getItem('products');
-    return stored ? JSON.parse(stored) : [];
-  });
-
-  const product = products.find((p) => p.id === params?.id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<Size>('Medium');
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (!params?.id) return;
+    fetch(`/api/products/${params.id}`)
+      .then((r) => {
+        if (!r.ok) throw new Error('Product not found');
+        return r.json();
+      })
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, [params?.id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-primary animate-spin" />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -43,7 +75,19 @@ const ProductDetail: React.FC = () => {
   const totalPrice = pricePerUnit * quantity;
 
   const handleAddToCart = () => {
-    addItem(product, selectedSize, quantity);
+    // Map API product shape to the CartContext expected Product shape
+    const productForCart = {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      category: product.category as any,
+      roastLevel: product.roastLevel as any,
+      basePrice: product.basePrice,
+      image: product.image,
+      available: product.available,
+      createdAt: new Date().toISOString(),
+    };
+    addItem(productForCart, selectedSize, quantity);
     toast.success(`Added ${quantity} ${product.name}(s) to cart!`);
     setQuantity(1);
   };
@@ -79,7 +123,9 @@ const ProductDetail: React.FC = () => {
           {/* Product Details */}
           <div>
             <div className="mb-6">
-              <span className="coffee-badge mb-4">{product.roastLevel} Roast</span>
+              {product.roastLevel && (
+                <span className="coffee-badge mb-4">{product.roastLevel} Roast</span>
+              )}
               <h1 className="text-4xl font-bold text-foreground mb-2">{product.name}</h1>
               <p className="text-muted-foreground text-lg">{product.category}</p>
             </div>

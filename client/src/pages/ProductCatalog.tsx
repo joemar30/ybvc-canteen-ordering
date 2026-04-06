@@ -1,23 +1,52 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { Product, RoastLevel } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Coffee } from 'lucide-react';
+import { Coffee, Loader2 } from 'lucide-react';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  basePrice: number;
+  category: string;
+  roastLevel: string;
+  image: string;
+  available: boolean;
+}
 
 const ProductCatalog: React.FC = () => {
   const [, setLocation] = useLocation();
-  const [selectedRoast, setSelectedRoast] = useState<RoastLevel | 'All'>('All');
+  const [selectedRoast, setSelectedRoast] = useState<string>('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [products, setProducts] = useState<Product[]>(() => {
-    const stored = localStorage.getItem('products');
-    return stored ? JSON.parse(stored) : [];
-  });
+  useEffect(() => {
+    fetch('/api/products')
+      .then((r) => {
+        if (!r.ok) throw new Error('Failed to load products');
+        return r.json();
+      })
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const categories = useMemo(() => {
     const cats = new Set(products.map((p) => p.category));
     return Array.from(cats).sort();
+  }, [products]);
+
+  const roastLevels = useMemo(() => {
+    const roasts = new Set(products.map((p) => p.roastLevel).filter(Boolean));
+    return Array.from(roasts).sort();
   }, [products]);
 
   const filteredProducts = useMemo(() => {
@@ -27,6 +56,30 @@ const ProductCatalog: React.FC = () => {
       return roastMatch && categoryMatch && product.available;
     });
   }, [products, selectedRoast, selectedCategory]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-primary mx-auto mb-4 animate-spin" />
+          <p className="text-muted-foreground">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Coffee className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+          <h2 className="text-xl font-bold text-foreground mb-2">Could not load products</h2>
+          <p className="text-muted-foreground mb-4">{error}</p>
+          <Button onClick={() => window.location.reload()} className="btn-primary">Try Again</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -46,24 +99,26 @@ const ProductCatalog: React.FC = () => {
               <h2 className="text-xl font-bold text-foreground mb-6">Filters</h2>
 
               {/* Roast Level Filter */}
-              <div className="mb-8">
-                <h3 className="font-semibold text-foreground mb-4">Roast Level</h3>
-                <div className="space-y-3">
-                  {['All', 'Light', 'Medium', 'Dark'].map((roast) => (
-                    <label key={roast} className="flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        name="roast"
-                        value={roast}
-                        checked={selectedRoast === roast}
-                        onChange={(e) => setSelectedRoast(e.target.value as RoastLevel | 'All')}
-                        className="w-4 h-4 text-primary"
-                      />
-                      <span className="ml-3 text-foreground">{roast}</span>
-                    </label>
-                  ))}
+              {roastLevels.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="font-semibold text-foreground mb-4">Roast Level</h3>
+                  <div className="space-y-3">
+                    {['All', ...roastLevels].map((roast) => (
+                      <label key={roast} className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          name="roast"
+                          value={roast}
+                          checked={selectedRoast === roast}
+                          onChange={(e) => setSelectedRoast(e.target.value)}
+                          className="w-4 h-4 text-primary"
+                        />
+                        <span className="ml-3 text-foreground">{roast}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Category Filter */}
               <div className="mb-8">
@@ -123,7 +178,9 @@ const ProductCatalog: React.FC = () => {
                     <div className="p-4">
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="font-bold text-foreground text-lg">{product.name}</h3>
-                        <span className="coffee-badge text-xs">{product.roastLevel}</span>
+                        {product.roastLevel && (
+                          <span className="coffee-badge text-xs">{product.roastLevel}</span>
+                        )}
                       </div>
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {product.description}
