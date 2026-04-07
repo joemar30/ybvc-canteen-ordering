@@ -423,21 +423,30 @@
   }
 
   .brand-logo-icon {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    width: 38px;
+    height: 38px;
+    background: #FFFFFF;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    box-shadow: 0 2px 8px rgba(200, 90, 58, 0.3);
+    color: #C85A3A;
+    box-shadow: 0 2px 10px rgba(200, 90, 58, 0.35), 0 0 0 1.5px rgba(200, 90, 58, 0.15);
     flex-shrink: 0;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* In dark mode: use a warm tinted background so the icon stays crisp */
+  :is(.dark) .brand-logo-icon {
+    background: #F5F1ED;
+    color: #C85A3A;
+    box-shadow: 0 2px 12px rgba(200, 90, 58, 0.45), 0 0 0 1.5px rgba(245, 241, 237, 0.2);
   }
 
   .brand-logo:hover .brand-logo-icon {
     transform: rotate(-5deg) scale(1.05);
+    box-shadow: 0 4px 16px rgba(200, 90, 58, 0.5);
   }
 
   /* Mobile top bar */

@@ -31,7 +31,7 @@ const Logo: React.FC = () => {
       aria-label="Go to home"
     >
       <span className="brand-logo-icon" aria-hidden="true">
-        <Coffee size={18} strokeWidth={2.2} />
+        <Coffee size={19} strokeWidth={2.2} color="currentColor" />
       </span>
       <div>
         <div className="text-base leading-tight font-bold tracking-tight">YBVC Canteen</div>

@@ -484,3 +484,28 @@
 [2026-04-06T22:26:25.744Z] {"timestamp":1775514384193,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Login.tsx"],"stack":null}
 [2026-04-06T22:26:25.747Z] {"timestamp":1775514384283,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
 [2026-04-06T22:26:25.747Z] {"timestamp":1775514384343,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Login.tsx"],"stack":null}
+[2026-04-06T22:37:43.581Z] {"timestamp":1775515063365,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-06T22:37:43.581Z] {"timestamp":1775515063387,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Orders.tsx"],"stack":null}
+[2026-04-06T22:37:43.652Z] {"timestamp":1775515063405,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-06T22:37:43.652Z] {"timestamp":1775515063423,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Orders.tsx"],"stack":null}
+[2026-04-06T22:37:43.724Z] {"timestamp":1775515063407,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-06T22:37:43.724Z] {"timestamp":1775515063425,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Orders.tsx"],"stack":null}
+[2026-04-06T22:37:45.331Z] {"timestamp":1775515063540,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-06T22:37:45.331Z] {"timestamp":1775515063568,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Orders.tsx"],"stack":null}
+[2026-04-06T22:37:45.638Z] {"timestamp":1775515063701,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-06T22:37:45.638Z] {"timestamp":1775515063719,"level":"DEBUG","args":["[vite]","hot updated: /src/pages/Orders.tsx"],"stack":null}
+[2026-04-06T22:42:10.005Z] {"timestamp":1775515327725,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-04-06T22:42:10.005Z] {"timestamp":1775515327732,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-04-06T22:42:15.730Z] {"timestamp":1775515333928,"level":"INFO","args":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"],"stack":null}
+[2026-04-07T04:21:04.206Z] {"timestamp":1775535661915,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-04-07T04:21:04.206Z] {"timestamp":1775535661941,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-04-07T04:21:05.922Z] {"timestamp":1775535664305,"level":"INFO","args":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"],"stack":null}
+[2026-04-07T04:23:57.057Z] {"timestamp":1775535834450,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-04-07T04:23:57.057Z] {"timestamp":1775535834506,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-04-07T04:23:57.057Z] {"timestamp":1775535834807,"level":"INFO","args":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"],"stack":null}
+[2026-04-07T04:24:13.773Z] {"timestamp":1775535852742,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-07T04:24:25.072Z] {"timestamp":1775535863454,"level":"DEBUG","args":["[vite]","hot updated: /src/components/Sidebar.tsx"],"stack":null}
+[2026-04-07T04:24:25.072Z] {"timestamp":1775535863454,"level":"DEBUG","args":["[vite]","hot updated: /src/index.css"],"stack":null}
+[2026-04-07T04:24:50.730Z] {"timestamp":1775535888712,"level":"DEBUG","args":["[Manus] Debug collector initialized (no rrweb, UI events only)"],"stack":null}
+[2026-04-07T04:24:50.730Z] {"timestamp":1775535888758,"level":"DEBUG","args":["[vite] connected."],"stack":null}
+[2026-04-07T04:24:50.730Z] {"timestamp":1775535888789,"level":"INFO","args":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"],"stack":null}
